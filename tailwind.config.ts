@@ -58,6 +58,7 @@ export default {
       },
       fontFamily: {
         jeju: ["Jeju Myeongjo", "serif"],
+        roadRage: ["Road Rage", "sans-serif"],
       },
     },
   },
