@@ -1,26 +1,48 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
   return (
-    <nav className="flex items-center justify-between px-6 py-3 border rounded-full bg-[#0E1A1F] border-[#1E3A3E]">
+    <nav className="flex w-[1200px] h-[76px] p-[12px_16px] justify-between items-center rounded-[24px] border border-[#197686] bg-[rgba(5,37,44,0.4)] backdrop-blur-[2px] mx-auto mt-[24px]">
       <div className="flex items-center gap-2">
-        <div className="p-2 bg-[#1E3A3E] rounded-full">
-          {/* Placeholder for logo icon */}
-          <span className="text-white">🎟️</span>
+        <div className="flex p-[6px_8px] justify-center items-center gap-[10px] rounded-[12px] border border-[#0E464F] bg-[#052F35]">
+          <Image src="/icons/logo.svg" width={24} height={24} alt="Ticz Icon" />
         </div>
-        <span className="text-xl font-bold text-white">ticz</span>
+        <Image
+          src="/icons/ticz.svg"
+          width={43.793}
+          height={22.624}
+          alt="Ticz"
+        />
       </div>
 
-      <div className="flex gap-8 text-white">
-        <Link href="/events" className="hover:text-gray-300 transition">Events</Link>
-        <Link href="/my-tickets" className="hover:text-gray-300 transition">My Tickets</Link>
-        <Link href="/about" className="hover:text-gray-300 transition">About Project</Link>
+      <div className="flex items-center gap-4">
+        <Link
+          href="/events"
+          className="hover:text-gray-300 transition flex p-2.5 justify-center items-center gap-2.5 text-white text-[18px] font-normal leading-none font-jeju"
+        >
+          Events
+        </Link>
+        <Link
+          href="/my-tickets"
+          className="hover:text-gray-300 transition flex p-2.5 justify-center items-center gap-2.5 text-white text-[18px] font-normal leading-none font-jeju"
+        >
+          My Tickets
+        </Link>
+        <Link
+          href="/about"
+          className="hover:text-gray-300 transition flex p-2.5 justify-center items-center gap-2.5 text-white text-[18px] font-normal leading-none font-jeju"
+        >
+          About Project
+        </Link>
       </div>
 
-      <Button className="bg-white text-black px-6 py-2 rounded-full shadow-md hover:bg-gray-200">
-        MY TICKETS →
-      </Button>
+      <div className="flex items-center gap-4">
+        <Button className=" bg-white text-black px-4 py-6 justify-center items-center gap-2 rounded-[12px] hover:bg-gray-200 border border-[rgba(213,234,0,0.10)]">
+          MY TICKETS →
+        </Button>
+      </div>
     </nav>
   );
 };
