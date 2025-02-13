@@ -2,20 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+/* Fonts */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --font-roboto: "Roboto", sans-serif;
+    --font-jeju-myeongjo: "Jeju Myeongjo", serif;
+    --font-road-rage: "Road Rage", cursive;
+  }
+
+  body {
+    font-family: var(--font-roboto);
+    background: radial-gradient(circle, #24A0B5 50%, #041E23 100%);
+    color: #FAFAFA;
+    min-height: 100vh;
+    @apply antialiased;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom Colors */
+@layer utilities {
+  .text-primary {
+    color: #24A0B5;
+  }
+
+  .text-secondary {
+    color: #12464E;
+  }
+
+  .text-accent {
+    color: #0E464F;
+  }
+
+  .bg-primary {
+    background-color: #24A0B5;
+  }
+
+  .bg-secondary {
+    background-color: #041E23;
+  }
+
+  .bg-accent {
+    background-color: #133D44;
+  }
+
+  .gradient-bg {
+    background: radial-gradient(circle, #24A0B5 50%, #041E23 100%);
+  }
 }
