@@ -136,11 +136,11 @@ const TicketSelection = () => {
           </div>
 
           <div className="flex h-12 justify-end items-end gap-6 self-stretch">
-            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju hover:text-[#fff]">
+            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#fff]">
               Cancel
             </Button>
             <Button
-              className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju hover:text-[#24A0B5]"
+              className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#24A0B5]"
               onClick={nextStep}
             >
               Next
@@ -178,11 +178,11 @@ const TicketSelection = () => {
           </div>
 
           <div className="flex h-12 justify-end items-end gap-6 self-stretch">
-            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju hover:text-[#fff]" onClick={prevStep}>
+            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#fff]" onClick={prevStep}>
               Back
             </Button>
             <Button
-              className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju hover:text-[#24A0B5]"
+              className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#24A0B5]"
               onClick={nextStep}
             >
               Get My Free Ticket
@@ -209,10 +209,10 @@ const TicketSelection = () => {
           </p>
 
           <div className="flex h-12 justify-end items-end gap-6 self-stretch">
-            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju hover:text-[#fff]">
+            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#fff]">
               Book Another Ticket
             </Button>
-            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju hover:text-[#24A0B5]">
+            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#24A0B5]">
               Download Ticket
             </Button>
           </div>
