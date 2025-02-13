@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,24 @@ const TicketSelection = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [request, setRequest] = useState("");
+  const [image, setImage] = useState<string | null>(null);
+  const [imageURL, setImageURL] = useState<string | null>(null);
+
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      const file = acceptedFiles[0];
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl);
+      setImageURL(imageUrl); // Save for Step 3
+    },
+    [setImageURL]
+  );
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: { "image/*": [] },
+    multiple: false,
+  });
 
   const tickets = [
     {
@@ -152,57 +171,84 @@ const TicketSelection = () => {
       )}
 
       {step === 2 && (
-      <div className="space-y-6">
-        {/* Upload Profile Photo */}
-        <div>
-          <label className="block text-sm font-medium">Upload Profile Photo</label>
-          <div className="mt-2 flex flex-col items-center justify-center border border-gray-600 rounded-lg p-6 bg-gray-900 text-white">
-            <Upload className="w-10 h-10 text-gray-400" />
-            <p className="text-sm text-gray-400">Drag & drop or click to upload</p>
+        <div className="space-y-6">
+          {/* Upload Profile Photo */}
+          <div>
+            <label className="block text-sm font-medium text-white">
+              Upload Profile Photo
+            </label>
+            <div
+              {...getRootProps()}
+              className={`mt-2 flex flex-col items-center justify-center border-2 ${
+                isDragActive ? "border-blue-500" : "border-[#2C6777]"
+              } border-dashed rounded-xl p-10 bg-[#112B35] text-white cursor-pointer`}
+            >
+              <input {...getInputProps()} />
+              {image ? (
+                <img
+                  src={image}
+                  alt="Uploaded"
+                  className="w-32 h-32 object-cover rounded-lg"
+                />
+              ) : (
+                <>
+                  <Upload className="w-10 h-10 text-[#2C6777]" />
+                  <p className="text-sm text-gray-400">
+                    Drag & drop or click to upload
+                  </p>
+                </>
+              )}
+            </div>
           </div>
-        </div>
 
-        {/* Full Name */}
-        <div>
-          <label className="block text-sm font-medium">Enter your name</label>
-          <Input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Your Name"
-            className="mt-2"
-          />
-        </div>
-
-        {/* Email Address */}
-        <div>
-          <label className="block text-sm font-medium">Enter your email *</label>
-          <div className="relative mt-2">
-            <span className="absolute inset-y-0 left-2 flex items-center">
-              📧
-            </span>
+          {/* Full Name */}
+          <div>
+            <label className="block text-sm font-medium">Enter your name</label>
             <Input
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="hello@avioflagos.io"
-              className="pl-8"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Your Name"
+              className="mt-2"
             />
           </div>
-        </div>
 
-        {/* Special Request */}
-        <div>
-          <label className="block text-sm font-medium">Special request?</label>
-          <Textarea
-            value={request}
-            onChange={(e) => setRequest(e.target.value)}
-            placeholder="Textarea"
-            className="mt-2"
-          />
-        </div>
+          {/* Email Address */}
+          <div>
+            <label className="block text-sm font-medium">
+              Enter your email *
+            </label>
+            <div className="relative mt-2">
+              <span className="absolute inset-y-0 left-2 flex items-center">
+                📧
+              </span>
+              <Input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="hello@avioflagos.io"
+                className="pl-8"
+              />
+            </div>
+          </div>
 
-        {/* Buttons */}
-        <div className="flex h-12 justify-end items-end gap-6 self-stretch">
-            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#fff]" onClick={prevStep}>
+          {/* Special Request */}
+          <div>
+            <label className="block text-sm font-medium">
+              Special request?
+            </label>
+            <Textarea
+              value={request}
+              onChange={(e) => setRequest(e.target.value)}
+              placeholder="Textarea"
+              className="mt-2"
+            />
+          </div>
+
+          {/* Buttons */}
+          <div className="flex h-12 justify-end items-end gap-6 self-stretch">
+            <Button
+              className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#fff]"
+              onClick={prevStep}
+            >
               Back
             </Button>
             <Button
@@ -212,8 +258,8 @@ const TicketSelection = () => {
               Get My Ticket
             </Button>
           </div>
-      </div>
-    )}
+        </div>
+      )}
 
       {step === 3 && (
         <div>
