@@ -1,12 +1,11 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, SetStateAction } from "react";
 import { useDropzone } from "react-dropzone";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Upload } from "lucide-react";
 
 import {
   Select,
@@ -15,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Image from "next/image";
 
 const TicketSelection = () => {
   const [step, setStep] = useState(1);
@@ -103,7 +103,7 @@ const TicketSelection = () => {
           <div className="h-[4px] self-stretch bg-[#07373F]" />
 
           <div className="flex flex-col items-start gap-2 self-stretch">
-            <h4 className="self-stretch text-[#FAFAFA] font-roboto text-base font-normal leading-[150%]">
+            <h4 className="self-stretch text-[#FAFAFA] text-base font-normal leading-[150%]">
               Select Ticket Type:
             </h4>
             <div className="flex items-center justify-center gap-4 p-4 self-stretch rounded-[24px] border border-[#07373F] bg-[#052228]">
@@ -171,75 +171,94 @@ const TicketSelection = () => {
       )}
 
       {step === 2 && (
-        <div className="space-y-6">
+        <div className="flex flex-col p-[24px] justify-center items-start gap-[32px] self-stretch rounded-[32px] border border-[#0E464F] bg-[#08252B]">
           {/* Upload Profile Photo */}
-          <div>
-            <label className="block text-sm font-medium text-white">
+          <div className="flex flex-col w-[556px] p-[24px] pb-[48px] items-start gap-[32px] rounded-[24px] border border-[#07373F] bg-[#052228]">
+            <label className="text-center text-[#FAFAFA] text-[16px] font-normal leading-[150%]">
               Upload Profile Photo
             </label>
-            <div
-              {...getRootProps()}
-              className={`mt-2 flex flex-col items-center justify-center border-2 ${
-                isDragActive ? "border-blue-500" : "border-[#2C6777]"
-              } border-dashed rounded-xl p-10 bg-[#112B35] text-white cursor-pointer`}
-            >
-              <input {...getInputProps()} />
-              {image ? (
-                <img
-                  src={image}
-                  alt="Uploaded"
-                  className="w-32 h-32 object-cover rounded-lg"
-                />
-              ) : (
-                <>
-                  <Upload className="w-10 h-10 text-[#2C6777]" />
-                  <p className="text-sm text-gray-400">
-                    Drag & drop or click to upload
-                  </p>
-                </>
-              )}
+            <div className="flex h-[200px] justify-center items-center gap-[10px] self-stretch bg-[rgba(0,0,0,0.20)]">
+              <div
+                {...getRootProps()}
+                className={`flex w-[240px] h-[240px] p-[24px] flex-col justify-center items-center gap-[16px] rounded-3xl border-[4px] ${
+                  isDragActive
+                    ? "border-[rgba(36,160,181,0.75)]"
+                    : "border-[rgba(36,160,181,0.25)] bg-[rgba(36,160,181,0.1)]"
+                } rounded-xl p-10 bg-[#112B35] text-white cursor-pointer`}
+              >
+                <input {...getInputProps()} />
+                {image ? (
+                  <Image
+                    src={image}
+                    alt="Uploaded"
+                    height={80}
+                    width={80}
+                    className="w-80 h-80 object-cover rounded-lg"
+                  />
+                ) : (
+                  <>
+                    <Image
+                      src={`/icons/upload.svg`}
+                      height={32}
+                      width={32}
+                      alt="Upload Icon"
+                    />
+                    <p className="text-center text-[16px] font-normal leading-[150%] text-[#FAFAFA] self-stretch">
+                      Drag & drop or click to upload
+                    </p>
+                  </>
+                )}
+              </div>
             </div>
           </div>
 
+          <div className="h-[4px] self-stretch bg-[#07373F]" />
+
           {/* Full Name */}
-          <div>
-            <label className="block text-sm font-medium">Enter your name</label>
+          <div className="flex flex-col items-start gap-2 self-stretch">
+            <label className="text-[#FAFAFA] text-[16px] font-normal leading-[150%] self-stretch">
+              Enter your name
+            </label>
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Your Name"
-              className="mt-2"
+              placeholder=""
+              className="flex h-12 px-3 items-center gap-2 self-stretch rounded-[12px] border border-[#07373F] focus:border-[rgba(36,160,181,0.75)]"
             />
           </div>
 
           {/* Email Address */}
-          <div>
-            <label className="block text-sm font-medium">
+          <div className="flex flex-col items-start gap-2 self-stretch">
+            <label className="text-[#FAFAFA] text-[16px] font-normal leading-[150%]">
               Enter your email *
             </label>
-            <div className="relative mt-2">
-              <span className="absolute inset-y-0 left-2 flex items-center">
-                📧
-              </span>
+            <div className="group flex p-[12px] h-12 items-center gap-[8px] self-stretch rounded-[12px] border border-[#07373F] group-focus-within:border-[rgba(36,160,181,0.75)] group-focus-within:bg-[#07373F]">
+              <Image
+                src="/icons/envelope.svg"
+                height={24}
+                width={24}
+                alt="Upload Icon"
+                className="p-0 m-0"
+              />
               <Input
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="hello@avioflagos.io"
-                className="pl-8"
+                placeholder=""
+                className="flex-1 text-white text-[16px] font-normal leading-[150%] border-none outline-none"
               />
             </div>
           </div>
 
           {/* Special Request */}
-          <div>
-            <label className="block text-sm font-medium">
+          <div className="flex flex-col items-start gap-2 self-stretch">
+            <label className="text-[#FAFAFA] text-[16px] self-stretch font-normal leading-[150%]">
               Special request?
             </label>
             <Textarea
               value={request}
               onChange={(e) => setRequest(e.target.value)}
-              placeholder="Textarea"
-              className="mt-2"
+              placeholder=""
+              className="flex h-[127px] p-[12px] items-start gap-[8px] self-stretch rounded-[12px] border border-[#07373F]"
             />
           </div>
 
