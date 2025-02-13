@@ -287,6 +287,9 @@ const TicketSelection = () => {
             <p className="text-lg font-semibold">
               Ticket Type: {selectedTicket}
             </p>
+            <p className="hidden">
+              {imageURL}
+            </p>
             <p className="text-sm">Quantity: {ticketCount}</p>
             <p className="text-sm">
               Total:{" "}
