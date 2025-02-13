@@ -139,7 +139,10 @@ const TicketSelection = () => {
             <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju hover:text-[#fff]">
               Cancel
             </Button>
-            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju hover:text-[#24A0B5]">
+            <Button
+              className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju hover:text-[#24A0B5]"
+              onClick={nextStep}
+            >
               Next
             </Button>
           </div>
@@ -173,6 +176,18 @@ const TicketSelection = () => {
               placeholder="+234 706 220 0791"
             />
           </div>
+
+          <div className="flex h-12 justify-end items-end gap-6 self-stretch">
+            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju hover:text-[#fff]" onClick={prevStep}>
+              Back
+            </Button>
+            <Button
+              className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju hover:text-[#24A0B5]"
+              onClick={nextStep}
+            >
+              Get My Free Ticket
+            </Button>
+          </div>
         </div>
       )}
 
@@ -192,6 +207,15 @@ const TicketSelection = () => {
           <p className="text-sm text-gray-400">
             Proceed to payment to secure your ticket.
           </p>
+
+          <div className="flex h-12 justify-end items-end gap-6 self-stretch">
+            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju hover:text-[#fff]">
+              Book Another Ticket
+            </Button>
+            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju hover:text-[#24A0B5]">
+              Download Ticket
+            </Button>
+          </div>
         </div>
       )}
     </div>
