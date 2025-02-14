@@ -42,6 +42,11 @@ const TicketSelection = () => {
   const [request, setRequest] = useState("");
   const [image, setImage] = useState("");
   const [imageURL, setImageURL] = useState("");
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    image: "",
+  });
 
   useEffect(() => {
     const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -53,8 +58,8 @@ const TicketSelection = () => {
       setName(parsedData.name || "");
       setEmail(parsedData.email || "");
       setRequest(parsedData.request || "");
-      setImage(parsedData.image || ""); // Make sure this is correctly retrieved
-      setImageURL(parsedData.image || ""); // Ensure imageURL updates
+      setImage(parsedData.image || "");
+      setImageURL(parsedData.image || "");
     }
   }, []);
 
@@ -66,10 +71,10 @@ const TicketSelection = () => {
       name,
       email,
       request,
-      image, // Store the image here
+      image,
     };
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
-  }, [step, selectedTicket, ticketCount, name, email, request, image]); // No need to track imageURL
+  }, [step, selectedTicket, ticketCount, name, email, request, image]);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -103,6 +108,31 @@ const TicketSelection = () => {
 
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
+
+  // Email validation regex
+  const isValidEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  // Validate form fields
+  const validateForm = () => {
+    const newErrors = {
+      name: name.trim() ? "" : "Name is required",
+      email: isValidEmail(email) ? "" : "Enter a valid email",
+      image: image ? "" : "Profile photo is required",
+    };
+
+    setErrors(newErrors);
+
+    // Check if there are any errors
+    return !Object.values(newErrors).some((error) => error);
+  };
+
+  // Handle form submission
+  const handleNextStep = () => {
+    if (validateForm()) {
+      nextStep();
+    }
+  };
 
   return (
     <div className="flex flex-col items-center justify-center w-[700px] p-12 gap-8 rounded-[40px] border border-[#0E464F] bg-[#041E23]">
@@ -285,8 +315,13 @@ const TicketSelection = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder=""
-              className="flex h-12 px-3 items-center gap-2 self-stretch rounded-[12px] border border-[#07373F] focus:border-[rgba(36,160,181,0.75)]"
+              className={`flex h-12 px-3 items-center gap-2 self-stretch rounded-[12px] border ${
+                name.trim() === "" ? "border-red-500" : "border-[#07373F]"
+              } focus:border-[rgba(36,160,181,0.75)]`}
             />
+            {name.trim() === "" && (
+              <p className="text-red-500 text-sm">Name is required.</p>
+            )}
           </div>
 
           {/* Email Address */}
@@ -294,7 +329,13 @@ const TicketSelection = () => {
             <label className="text-[#FAFAFA] text-[16px] font-normal leading-[150%]">
               Enter your email *
             </label>
-            <div className="group flex p-[12px] h-12 items-center gap-[8px] self-stretch rounded-[12px] border border-[#07373F] group-focus-within:border-[rgba(36,160,181,0.75)] group-focus-within:bg-[#07373F]">
+            <div
+              className={`group flex p-[12px] h-12 items-center gap-[8px] self-stretch rounded-[12px] border ${
+                !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) && email.trim() !== ""
+                  ? "border-red-500"
+                  : "border-[#07373F]"
+              } group-focus-within:border-[rgba(36,160,181,0.75)] group-focus-within:bg-[#07373F]`}
+            >
               <Image
                 src="/icons/envelope.svg"
                 height={24}
@@ -309,6 +350,10 @@ const TicketSelection = () => {
                 className="flex-1 text-white text-[16px] font-normal leading-[150%] border-none outline-none"
               />
             </div>
+            {!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) &&
+              email.trim() !== "" && (
+                <p className="text-red-500 text-sm">Enter a valid email.</p>
+              )}
           </div>
 
           {/* Special Request */}
@@ -334,7 +379,14 @@ const TicketSelection = () => {
             </Button>
             <Button
               className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#24A0B5]"
-              onClick={nextStep}
+              onClick={() => {
+                if (
+                  name.trim() !== "" &&
+                  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+                ) {
+                  nextStep();
+                }
+              }}
             >
               Get My Ticket
             </Button>
