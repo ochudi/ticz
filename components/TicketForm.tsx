@@ -154,7 +154,7 @@ const TicketSelection = () => {
             <h4 className="self-stretch text-[#FAFAFA] text-base font-normal leading-[150%]">
               Select Ticket Type:
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 self-stretch rounded-[24px] border border-[#07373F] bg-[#052228]">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 self-stretch rounded-[24px] border border-[#07373F] bg-[#052228]">
               {tickets.map((ticket) => (
                 <button
                   key={ticket.type}
