@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import Image from "next/image";
 import { useDropzone } from "react-dropzone";
+import { useState, useCallback } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-
 import {
   Select,
   SelectContent,
@@ -14,7 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Image from "next/image";
 
 const TicketSelection = () => {
   const [step, setStep] = useState(1);
@@ -24,7 +23,7 @@ const TicketSelection = () => {
   const [email, setEmail] = useState("");
   const [request, setRequest] = useState("");
   const [image, setImage] = useState<string | null>(null);
-  const [imageURL, setImageURL] = useState<string | null>(null);
+  const [imageURL, setImageURL] = useState("");
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
@@ -180,21 +179,35 @@ const TicketSelection = () => {
             <div className="flex h-[200px] justify-center items-center gap-[10px] self-stretch bg-[rgba(0,0,0,0.20)]">
               <div
                 {...getRootProps()}
-                className={`flex w-[240px] h-[240px] p-[24px] flex-col justify-center items-center gap-[16px] rounded-3xl border-[4px] ${
+                className={`flex w-[240px] h-[240px] flex-col justify-center items-center gap-[16px] rounded-3xl border-[4px] ${
                   isDragActive
-                    ? "border-[rgba(36,160,181,0.75)]"
+                    ? "border-[rgba(36,160,181,0.75)] bg-[rgba(36,160,181,0.1)]"
                     : "border-[rgba(36,160,181,0.25)] bg-[rgba(36,160,181,0.1)]"
-                } rounded-xl p-10 bg-[#112B35] text-white cursor-pointer`}
+                } rounded-xl bg-[#112B35] text-white cursor-pointer`}
               >
                 <input {...getInputProps()} />
-                {image ? (
-                  <Image
-                    src={image}
-                    alt="Uploaded"
-                    height={80}
-                    width={80}
-                    className="w-80 h-80 object-cover rounded-lg"
-                  />
+
+                {isDragActive ? (
+                  <>
+                    <Image
+                      src={`/icons/upload.svg`}
+                      height={32}
+                      width={32}
+                      alt="Upload Icon"
+                    />
+                    <p className="text-center text-[16px] font-normal leading-[150%] text-[#FAFAFA] self-stretch">
+                      Drag & drop or click to upload
+                    </p>
+                  </>
+                ) : image ? (
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={image}
+                      alt="Uploaded"
+                      fill
+                      className="rounded-[12px] border border-[rgba(36,160,181,0.50)] object-cover"
+                    />
+                  </div>
                 ) : (
                   <>
                     <Image
@@ -281,32 +294,110 @@ const TicketSelection = () => {
       )}
 
       {step === 3 && (
-        <div>
-          <h3 className="text-lg font-bold">Confirm Your Selection</h3>
-          <div className="bg-gray-800 p-4 rounded-lg my-4">
-            <p className="text-lg font-semibold">
-              Ticket Type: {selectedTicket}
-            </p>
-            <p className="hidden">
-              {imageURL}
-            </p>
-            <p className="text-sm">Quantity: {ticketCount}</p>
-            <p className="text-sm">
-              Total:{" "}
-              {selectedTicket === "Free" ? "Free" : `$${150 * ticketCount}`}
+        <div className="flex flex-col justify-center items-center gap-8 self-stretch">
+          <div className="flex flex-col items-center gap-4 self-stretch">
+            <h2 className="text-white text-center font-alatsi text-2xl font-normal leading-none">
+              Your Ticket is Booked!
+            </h2>
+            <p className="text-gray-100 text-center text-[16px] font-normal leading-[150%] self-stretch">
+              Check your email for a copy or you can{" "}
+              <span className="font-bold">download</span>
             </p>
           </div>
-          <p className="text-sm text-gray-400">
-            Proceed to payment to secure your ticket.
-          </p>
 
-          <div className="flex h-12 justify-end items-end gap-6 self-stretch">
-            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#fff]">
-              Book Another Ticket
-            </Button>
-            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#24A0B5]">
-              Download Ticket
-            </Button>
+          <div className="flex flex-col items-center gap-6 self-stretch">
+            {/* Ticket Card */}
+            <div className="flex flex-col justify-center items-center gap-2.5 self-stretch rounded-3xl px-[21px] py-8">
+              <div className="flex flex-col items-center w-[300px] h-[600px] bg-[url('/images/ticket.png')] bg-cover bg-center">
+                <div className="flex mt-5 w-[260px] h-[446px] p-[14px] items-center flex-shrink-0 rounded-[16px] border border-[#24A0B5] bg-[rgba(3,30,33,0.10)] backdrop-blur-[2px]">
+                  <div className="flex w-[232px] flex-col items-center gap-[20px] flex-shrink-0">
+                    <div className="flex w-[175px] flex-col items-center">
+                      <h2 className="self-stretch text-white text-center font-roadRage text-[34px] font-normal leading-[100%]">
+                        Techember Fest &quot;25
+                      </h2>
+                      <div className="flex flex-col justify-center items-center gap-[4px] p-[4px]">
+                        <p className="text-white text-[10px] font-normal leading-[15px]">
+                          📍 04 Rumens road, Ikoyi, Lagos
+                        </p>
+                        <p className="text-white text-[10px] font-normal leading-[150%]">
+                          📅 March 15, 2025 | 7:00 PM
+                        </p>
+                      </div>
+                    </div>
+                    <Image
+                      src={`/images/image.webp`}
+                      width={140}
+                      height={140}
+                      alt="User image"
+                      className="rounded-[12px] border-[4px] border-[rgba(36,160,181,0.50)] bg-[url('/path-to-image')] bg-lightgray bg-center bg-cover bg-no-repeat"
+                    />
+                    <div className="flex flex-col justify-center items-center p-1 self-stretch rounded-md border border-[#133D44] bg-[#08343C]">
+                      <div className="flex items-center gap-2 self-stretch border-b border-[#12464E]">
+                        <div className="flex flex-col justify-center items-start gap-1 p-1 flex-[1_0_0] border-r border-[#12464E]">
+                          <label className="text-white text-[10px] font-normal leading-[150%] opacity-[0.33]">
+                            Enter your name
+                          </label>
+                          <p className="text-white text-[12px] font-bold leading-[150%]">
+                            Avi Chukwu
+                          </p>
+                        </div>
+                        <div className="flex flex-col justify-center items-start gap-[4px] p-[4px] flex-[1_0_0]">
+                          <label className="text-white text-[10px] font-normal leading-[150%] opacity-33">
+                            Enter your email *
+                          </label>
+                          <p className="text-white text-[12px] font-bold leading-[150%]">
+                            User@email.com
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 self-stretch border-b border-[#12464E]">
+                        <div className="flex flex-col justify-center items-start gap-1 p-1 flex-[1_0_0] border-r border-[#12464E]">
+                          <label className="text-white text-[10px] font-normal leading-[150%] opacity-[0.33]">
+                            Ticket Type
+                          </label>
+                          <p className="text-white text-[12px] font-bold leading-[150%]">
+                            VIP
+                          </p>
+                        </div>
+                        <div className="flex flex-col justify-center items-start gap-1 p-1 flex-[1_0_0]">
+                          <label className="text-white text-[10px] font-normal leading-[150%] opacity-[0.33]">
+                            Ticket For:
+                          </label>
+                          <p className="text-white text-[12px] font-bold leading-[150%]">
+                            1
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-col justify-center items-start gap-1 p-2 self-stretch">
+                        <label className="text-white text-[10px] font-normal leading-[150%] opacity-[0.33]">
+                          Special Request?
+                        </label>
+                        <p className="text-white font-roboto text-[10px] font-normal leading-[150%] self-stretch">
+                          Nil ? Or the users sad story they write in there gets
+                          this whole space, Max of three rows
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <Image
+                  src={`/images/barcode.svg`}
+                  width={236}
+                  height={68}
+                  alt="Barcode"
+                  className="mt-11"
+                />
+              </div>
+            </div>
+
+            <div className="flex h-[48px] justify-end items-end gap-[24px] self-stretch">
+              <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#fff]">
+                Book Another Ticket
+              </Button>
+              <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#24A0B5]">
+                Download Ticket
+              </Button>
+            </div>
           </div>
         </div>
       )}
