@@ -42,11 +42,6 @@ const TicketSelection = () => {
   const [request, setRequest] = useState("");
   const [image, setImage] = useState("");
   const [imageURL, setImageURL] = useState("");
-  const [errors, setErrors] = useState({
-    name: "",
-    email: "",
-    image: "",
-  });
 
   useEffect(() => {
     const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -108,31 +103,6 @@ const TicketSelection = () => {
 
   const nextStep = () => setStep((prev) => prev + 1);
   const prevStep = () => setStep((prev) => prev - 1);
-
-  // Email validation regex
-  const isValidEmail = (email: string) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  // Validate form fields
-  const validateForm = () => {
-    const newErrors = {
-      name: name.trim() ? "" : "Name is required",
-      email: isValidEmail(email) ? "" : "Enter a valid email",
-      image: image ? "" : "Profile photo is required",
-    };
-
-    setErrors(newErrors);
-
-    // Check if there are any errors
-    return !Object.values(newErrors).some((error) => error);
-  };
-
-  // Handle form submission
-  const handleNextStep = () => {
-    if (validateForm()) {
-      nextStep();
-    }
-  };
 
   return (
     <div className="flex flex-col items-center justify-center w-[700px] p-12 gap-8 rounded-[40px] border border-[#0E464F] bg-[#041E23]">
