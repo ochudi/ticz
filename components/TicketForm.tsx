@@ -105,44 +105,43 @@ const TicketSelection = () => {
   const prevStep = () => setStep((prev) => prev - 1);
 
   return (
-    <div className="flex flex-col items-center justify-center w-[700px] p-12 gap-8 rounded-[40px] border border-[#0E464F] bg-[#041E23]">
-      <div className="flex flex-col items-start gap-3 self-stretch">
-        <div className="flex flex-row items-center gap-4 flex-1 justify-between w-full">
-          <h2 className="text-white font-jeju text-3xl font-normal">
+    <div className="flex flex-col items-center justify-center w-full min-w-[335px] max-w-[700px] px-6 sm:px-12 py-12 gap-8 rounded-[40px] border border-[#0E464F] bg-[#041E23] mx-2 md:mx-0">
+      <div className="flex flex-col items-start gap-3 w-full">
+        <div className="flex items-center gap-4 w-full justify-between">
+          <h2 className="text-white font-jeju text-2xl sm:text-3xl font-normal">
             {["Ticket Selection", "Attendee Details", "Ready"][step - 1]}
           </h2>
-          <p className="text-[var(--color-grey-98,#FAFAFA)] text-base font-normal leading-6">
+          <p className="text-[var(--color-grey-98,#FAFAFA)] text-sm sm:text-base font-normal leading-6">
             Step {step}/3
           </p>
         </div>
-        <div className="flex h-1 items-center self-stretch rounded-[5px] bg-[#0E464F]">
+        <div className="flex h-1 w-full rounded-[5px] bg-[#0E464F]">
           <div
-            className={`self-stretch rounded-[5px] bg-[#24A0B5] transition-all duration-300`}
+            className="rounded-[5px] bg-[#24A0B5] transition-all duration-300"
             style={{ width: `${(step / 3) * 100}%` }}
           />
         </div>
       </div>
 
       {step === 1 && (
-        <div className="flex flex-col justify-center items-start gap-8 self-stretch p-6 rounded-[32px] border border-[#0E464F] bg-[#08252B]">
-          <div className="flex flex-col items-center gap-2 self-stretch h-[200px] p-6 rounded-[24px] border-r-[2px] border-b-[2px] border-l-[2px] border-[#07373F] bg-gradient-to-br from-[rgba(36,160,181,0.2)] to-[rgba(10,12,17,0.8)] backdrop-blur-[7px]">
+        <div className="flex flex-col justify-center items-start gap-8 self-stretch p-6 rounded-[32px] border border-[#0E464F] bg-[#08252B] w-full max-w-[600px] mx-auto">
+          {/* Event Info */}
+          <div className="flex flex-col items-center gap-2 self-stretch min-h-[200px] p-6 rounded-[24px] border-r-[2px] border-b-[2px] border-l-[2px] border-[#07373F] bg-gradient-to-br from-[rgba(36,160,181,0.2)] to-[rgba(10,12,17,0.8)] backdrop-blur-[7px]">
             <div className="flex flex-col items-center gap-2 self-stretch">
-              <h3 className="text-[#FAFAFA] text-center text-[62px] font-normal leading-[100%] self-stretch font-roadRage">
+              <h3 className="text-[#FAFAFA] text-center text-[40px] sm:text-[62px] font-normal leading-[100%] self-stretch font-roadRage">
                 Techember Fest &quot;25
               </h3>
-              <p className="text-center text-[16px] font-normal leading-[24px] text-[#FAFAFA] w-[340px]">
+              <p className="text-center text-[16px] font-normal leading-[24px] text-[#FAFAFA] max-w-[340px]">
                 Join us for an unforgettable experience at Techember Fest!
                 Secure your spot now.
               </p>
             </div>
-            <div className="flex items-start gap-4">
-              <p className="text-[#FAFAFA] text-base font-normal leading-[150%]">
+            <div className="flex flex-wrap justify-center gap-4 text-center text-white">
+              <p className="text-base font-normal leading-[150%]">
                 📍 Lekki Phase 1, Lagos
               </p>
-              <p className="text-[#FAFAFA] text-base font-normal leading-[150%]">
-                | |
-              </p>
-              <p className="text-[#FAFAFA] text-base font-normal leading-[150%]">
+              <p className="hidden sm:inline">| |</p>
+              <p className="text-base font-normal leading-[150%]">
                 March 15, 2025 | 7:00 PM
               </p>
             </div>
@@ -150,20 +149,21 @@ const TicketSelection = () => {
 
           <div className="h-[4px] self-stretch bg-[#07373F]" />
 
+          {/* Select Ticket Type */}
           <div className="flex flex-col items-start gap-2 self-stretch">
             <h4 className="self-stretch text-[#FAFAFA] text-base font-normal leading-[150%]">
               Select Ticket Type:
             </h4>
-            <div className="flex items-center justify-center gap-4 p-4 self-stretch rounded-[24px] border border-[#07373F] bg-[#052228]">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 self-stretch rounded-[24px] border border-[#07373F] bg-[#052228]">
               {tickets.map((ticket) => (
                 <button
                   key={ticket.type}
                   onClick={() => setSelectedTicket(ticket.type)}
-                  className={`flex flex-col w-[158px] h-[110px] p-3 items-start gap-3 rounded-[12px] border-2 border-[#197686] ${
+                  className={`flex flex-col w-full h-[110px] p-3 items-start gap-3 rounded-[12px] border-2 border-[#197686] ${
                     selectedTicket === ticket.type
                       ? "bg-[#12464E]"
                       : "bg-[#052228]"
-                  }  hover:border-teal-500 transition-all`}
+                  } hover:border-teal-500 transition-all`}
                 >
                   <p className="text-white text-[24px] font-semibold leading-[110%]">
                     {ticket.price}
@@ -179,6 +179,7 @@ const TicketSelection = () => {
             </div>
           </div>
 
+          {/* Number of Tickets */}
           <div className="flex flex-col items-start gap-2 self-stretch">
             <h4 className="text-[#FAFAFA] text-[16px] font-normal leading-[150%]">
               Number of Tickets:
@@ -204,12 +205,13 @@ const TicketSelection = () => {
             </Select>
           </div>
 
-          <div className="flex h-12 justify-end items-end gap-6 self-stretch">
-            <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#fff]">
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row h-12 justify-end items-end gap-4 self-stretch mt-12 md:mt-0">
+            <Button className="w-full sm:w-auto flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-transparent text-[#24A0B5] font-jeju text-[16px] font-normal hover:bg-[#24A0B5] hover:text-white transition-all">
               Cancel
             </Button>
             <Button
-              className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#24A0B5]"
+              className="w-full sm:w-auto flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-[#24A0B5] text-white font-jeju text-[16px] font-normal hover:bg-[#1A8191] transition-all"
               onClick={nextStep}
             >
               Next
