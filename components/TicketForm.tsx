@@ -132,7 +132,8 @@ const TicketSelection = () => {
                 Techember Fest &quot;25
               </h3>
               <p className="text-center text-sm md:text-[16px] font-normal leading-[24px] text-[#FAFAFA]">
-                Join us for an unforgettable experience at Techember Fest! Secure your spot now.
+                Join us for an unforgettable experience at Techember Fest!
+                Secure your spot now.
               </p>
             </div>
             <div className="flex flex-wrap justify-center gap-1 text-center text-white">
@@ -465,9 +466,9 @@ const TicketSelection = () => {
               </div>
             </div>
 
-            <div className="flex h-[48px] justify-end items-end gap-[24px] self-stretch">
+            <div className="flex flex-col sm:flex-row h-12 justify-end items-end gap-4 self-stretch mt-16 md:mt-0">
               <Button
-                className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#fff]"
+                className="w-full sm:w-auto flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-transparent text-[#24A0B5] font-jeju text-[16px] font-normal hover:bg-[#24A0B5] hover:text-white transition-all"
                 onClick={() => {
                   localStorage.removeItem(LOCAL_STORAGE_KEY); // Clear stored data
                   localStorage.removeItem("image"); // Clear the stored image
@@ -485,7 +486,7 @@ const TicketSelection = () => {
               </Button>
 
               <Button
-                className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#24A0B5]"
+                className="w-full sm:w-auto flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-[#24A0B5] text-white font-jeju text-[16px] font-normal hover:bg-[#1A8191] transition-all"
                 onClick={downloadTicket}
               >
                 Download Ticket
