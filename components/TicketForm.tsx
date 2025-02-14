@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import html2canvas from "html2canvas";
 import { useDropzone } from "react-dropzone";
 import { useState, useCallback, useEffect } from "react";
 
@@ -16,6 +17,21 @@ import {
 } from "@/components/ui/select";
 
 const LOCAL_STORAGE_KEY = "ticket-form-data";
+
+const downloadTicket = async () => {
+  const ticketElement = document.getElementById("ticket-section");
+  if (!ticketElement) return;
+
+  const canvas = await html2canvas(ticketElement);
+  const image = canvas.toDataURL("image/png");
+
+  const link = document.createElement("a");
+  link.href = image;
+  link.download = "ticket.png";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
 
 const TicketSelection = () => {
   const [step, setStep] = useState(1);
@@ -339,7 +355,10 @@ const TicketSelection = () => {
           </div>
 
           <div className="flex flex-col items-center gap-6 self-stretch">
-            <div className="flex flex-col justify-center items-center gap-2.5 self-stretch rounded-3xl px-[21px] py-8">
+            <div
+              id="ticket-section"
+              className="flex flex-col justify-center items-center gap-2.5 self-stretch rounded-3xl px-[21px] py-8"
+            >
               <div className="flex flex-col items-center w-[300px] h-[600px] bg-[url('/images/ticket.png')] bg-cover bg-center">
                 <div className="flex mt-5 w-[260px] h-[446px] p-[14px] items-center flex-shrink-0 rounded-[16px] border border-[#24A0B5] bg-[rgba(3,30,33,0.10)] backdrop-blur-[2px]">
                   <div className="flex w-[232px] flex-col items-center gap-[20px] flex-shrink-0">
@@ -442,7 +461,10 @@ const TicketSelection = () => {
                 Book Another Ticket
               </Button>
 
-              <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#24A0B5]">
+              <Button
+                className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#24A0B5]"
+                onClick={downloadTicket}
+              >
                 Download Ticket
               </Button>
             </div>
