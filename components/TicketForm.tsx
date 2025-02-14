@@ -105,7 +105,7 @@ const TicketSelection = () => {
   const prevStep = () => setStep((prev) => prev - 1);
 
   return (
-    <div className="flex flex-col items-center justify-center w-full min-w-[335px] max-w-[700px] px-6 sm:px-12 py-12 gap-8 rounded-[40px] border border-[#0E464F] bg-[#041E23] mx-2 md:mx-0">
+    <div className="flex flex-col items-center justify-center w-full min-w-[335px] max-w-[700px] px-6 sm:px-12 py-12 gap-8 rounded-[40px] border border-[#0E464F] bg-[#041E23] mx-5 md:mx-0">
       <div className="flex flex-col items-start gap-3 w-full">
         <div className="flex items-center gap-4 w-full justify-between">
           <h2 className="text-white font-jeju text-2xl sm:text-3xl font-normal">
@@ -126,17 +126,16 @@ const TicketSelection = () => {
       {step === 1 && (
         <div className="flex flex-col justify-center items-start gap-8 self-stretch p-6 rounded-[32px] border border-[#0E464F] bg-[#08252B] w-full max-w-[600px] mx-auto">
           {/* Event Info */}
-          <div className="flex flex-col items-center gap-2 self-stretch min-h-[200px] p-6 rounded-[24px] border-r-[2px] border-b-[2px] border-l-[2px] border-[#07373F] bg-gradient-to-br from-[rgba(36,160,181,0.2)] to-[rgba(10,12,17,0.8)] backdrop-blur-[7px]">
+          <div className="flex flex-col items-center gap-10 self-stretch min-h-[200px] p-6 rounded-[24px] border-r-[2px] border-b-[2px] border-l-[2px] border-[#07373F] bg-gradient-to-br from-[rgba(36,160,181,0.2)] to-[rgba(10,12,17,0.8)] backdrop-blur-[7px]">
             <div className="flex flex-col items-center gap-2 self-stretch">
               <h3 className="text-[#FAFAFA] text-center text-[40px] sm:text-[62px] font-normal leading-[100%] self-stretch font-roadRage">
                 Techember Fest &quot;25
               </h3>
-              <p className="text-center text-[16px] font-normal leading-[24px] text-[#FAFAFA] max-w-[340px]">
-                Join us for an unforgettable experience at Techember Fest!
-                Secure your spot now.
+              <p className="text-center text-sm md:text-[16px] font-normal leading-[24px] text-[#FAFAFA]">
+                Join us for an unforgettable experience at Techember Fest! Secure your spot now.
               </p>
             </div>
-            <div className="flex flex-wrap justify-center gap-4 text-center text-white">
+            <div className="flex flex-wrap justify-center gap-1 text-center text-white">
               <p className="text-base font-normal leading-[150%]">
                 📍 Lekki Phase 1, Lagos
               </p>
@@ -223,7 +222,7 @@ const TicketSelection = () => {
       {step === 2 && (
         <div className="flex flex-col p-[24px] justify-center items-start gap-[32px] self-stretch rounded-[32px] border border-[#0E464F] bg-[#08252B]">
           {/* Upload Profile Photo */}
-          <div className="flex flex-col w-[556px] p-[24px] pb-[48px] items-start gap-[32px] rounded-[24px] border border-[#07373F] bg-[#052228]">
+          <div className="flex flex-col max-w-[556px] md:w-[556px] p-[24px] pb-[48px] self-center md:items-start gap-[32px] rounded-[24px] md:border border-[#07373F] md:bg-[#052228]">
             <label className="text-center text-[#FAFAFA] text-[16px] font-normal leading-[150%]">
               Upload Profile Photo
             </label>
@@ -342,15 +341,15 @@ const TicketSelection = () => {
           </div>
 
           {/* Buttons */}
-          <div className="flex h-12 justify-end items-end gap-6 self-stretch">
+          <div className="flex flex-col sm:flex-row h-12 justify-end items-end gap-4 self-stretch mt-16 md:mt-0">
             <Button
-              className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#fff]"
+              className="w-full sm:w-auto flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-transparent text-[#24A0B5] font-jeju text-[16px] font-normal hover:bg-[#24A0B5] hover:text-white transition-all"
               onClick={prevStep}
             >
               Back
             </Button>
             <Button
-              className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#24A0B5]"
+              className="w-full sm:w-auto flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-[#24A0B5] text-white font-jeju text-[16px] font-normal hover:bg-[#1A8191] transition-all"
               onClick={() => {
                 if (
                   name.trim() !== "" &&
