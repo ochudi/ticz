@@ -325,7 +325,7 @@ const TicketSelection = () => {
                       </div>
                     </div>
                     <Image
-                      src={`/images/image.webp`}
+                      src={`${imageURL ? imageURL : "/images/image.webp"}`}
                       width={140}
                       height={140}
                       alt="User image"
