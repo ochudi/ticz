@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useDropzone } from "react-dropzone";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+const LOCAL_STORAGE_KEY = "ticket-form-data";
+
 const TicketSelection = () => {
   const [step, setStep] = useState(1);
   const [selectedTicket, setSelectedTicket] = useState("Free");
@@ -22,18 +24,49 @@ const TicketSelection = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [request, setRequest] = useState("");
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState("");
   const [imageURL, setImageURL] = useState("");
 
-  const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
-      const file = acceptedFiles[0];
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
-      setImageURL(imageUrl); // Save for Step 3
-    },
-    [setImageURL]
-  );
+  useEffect(() => {
+    const savedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (savedData) {
+      const parsedData = JSON.parse(savedData);
+      setStep(parsedData.step || 1);
+      setSelectedTicket(parsedData.selectedTicket || "Free");
+      setTicketCount(parsedData.ticketCount || 1);
+      setName(parsedData.name || "");
+      setEmail(parsedData.email || "");
+      setRequest(parsedData.request || "");
+      setImage(parsedData.image || ""); // Make sure this is correctly retrieved
+      setImageURL(parsedData.image || ""); // Ensure imageURL updates
+    }
+  }, []);
+
+  useEffect(() => {
+    const data = {
+      step,
+      selectedTicket,
+      ticketCount,
+      name,
+      email,
+      request,
+      image, // Store the image here
+    };
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+  }, [step, selectedTicket, ticketCount, name, email, request, image]); // No need to track imageURL
+
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      setImage(base64String);
+      setImageURL(base64String); // Ensure imageURL updates
+    };
+
+    reader.readAsDataURL(file);
+  }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -306,7 +339,6 @@ const TicketSelection = () => {
           </div>
 
           <div className="flex flex-col items-center gap-6 self-stretch">
-            {/* Ticket Card */}
             <div className="flex flex-col justify-center items-center gap-2.5 self-stretch rounded-3xl px-[21px] py-8">
               <div className="flex flex-col items-center w-[300px] h-[600px] bg-[url('/images/ticket.png')] bg-cover bg-center">
                 <div className="flex mt-5 w-[260px] h-[446px] p-[14px] items-center flex-shrink-0 rounded-[16px] border border-[#24A0B5] bg-[rgba(3,30,33,0.10)] backdrop-blur-[2px]">
@@ -337,16 +369,18 @@ const TicketSelection = () => {
                           <label className="text-white text-[10px] font-normal leading-[150%] opacity-[0.33]">
                             Enter your name
                           </label>
-                          <p className="text-white text-[12px] font-bold leading-[150%]">
-                            Avi Chukwu
+                          <p className="text-white text-[12px] font-bold leading-[150%] w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                            {name.length > 6 ? `${name.slice(0, 10)}...` : name}
                           </p>
                         </div>
                         <div className="flex flex-col justify-center items-start gap-[4px] p-[4px] flex-[1_0_0]">
-                          <label className="text-white text-[10px] font-normal leading-[150%] opacity-33">
+                          <label className="text-white text-[10px] font-normal leading-[150%] opacity-[0.33]">
                             Enter your email *
                           </label>
-                          <p className="text-white text-[12px] font-bold leading-[150%]">
-                            User@email.com
+                          <p className="text-white text-[12px] font-bold leading-[150%] w-full overflow-hidden text-ellipsis whitespace-nowrap">
+                            {email.length > 6
+                              ? `${email.slice(0, 10)}...`
+                              : email}
                           </p>
                         </div>
                       </div>
@@ -355,16 +389,16 @@ const TicketSelection = () => {
                           <label className="text-white text-[10px] font-normal leading-[150%] opacity-[0.33]">
                             Ticket Type
                           </label>
-                          <p className="text-white text-[12px] font-bold leading-[150%]">
-                            VIP
+                          <p className="text-white text-[12px] font-bold leading-[150%] truncate w-full">
+                            {selectedTicket}
                           </p>
                         </div>
                         <div className="flex flex-col justify-center items-start gap-1 p-1 flex-[1_0_0]">
                           <label className="text-white text-[10px] font-normal leading-[150%] opacity-[0.33]">
                             Ticket For:
                           </label>
-                          <p className="text-white text-[12px] font-bold leading-[150%]">
-                            1
+                          <p className="text-white text-[12px] font-bold leading-[150%] truncate w-full">
+                            {ticketCount}
                           </p>
                         </div>
                       </div>
@@ -372,9 +406,8 @@ const TicketSelection = () => {
                         <label className="text-white text-[10px] font-normal leading-[150%] opacity-[0.33]">
                           Special Request?
                         </label>
-                        <p className="text-white font-roboto text-[10px] font-normal leading-[150%] self-stretch">
-                          Nil ? Or the users sad story they write in there gets
-                          this whole space, Max of three rows
+                        <p className="text-white font-roboto text-[10px] font-normal leading-[150%] self-stretch truncate w-full">
+                          {request}
                         </p>
                       </div>
                     </div>
@@ -391,9 +424,24 @@ const TicketSelection = () => {
             </div>
 
             <div className="flex h-[48px] justify-end items-end gap-[24px] self-stretch">
-              <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#fff]">
+              <Button
+                className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-inherit hover:bg-[#24A0B5] text-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#fff]"
+                onClick={() => {
+                  localStorage.removeItem(LOCAL_STORAGE_KEY); // Clear stored data
+                  localStorage.removeItem("image"); // Clear the stored image
+                  setStep(1); // Reset the step
+                  setSelectedTicket("Free");
+                  setTicketCount(1);
+                  setName("");
+                  setEmail("");
+                  setRequest("");
+                  setImage("");
+                  setImageURL("");
+                }}
+              >
                 Book Another Ticket
               </Button>
+
               <Button className="flex flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] font-jeju text-[16px] font-normal hover:text-[#24A0B5]">
                 Download Ticket
               </Button>
