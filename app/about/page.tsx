@@ -28,14 +28,14 @@ const handleCodeClick = () => {
 
 const About = () => {
   return (
-    <div className="max-w-4xl p-6 md:p-10 bg-[#052228] rounded-[24px] border border-[#07373F] text-white mx-5 md:mx-auto mt-[24px]">
+    <div className="max-w-4xl p-6 md:p-10 bg-[#052228] rounded-[24px] border border-[#07373F] text-white mx-5 md:mx-auto mt-[24px] font-jeju">
       {/* Header */}
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-[#24A0B5] mb-6">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-[#24A0B5] mb-6 font-jeju">
         About Ticz
       </h1>
 
       {/* Introduction */}
-      <p className="text-base sm:text-lg md:text-xl text-gray-300 text-center leading-relaxed">
+      <p className="text-base sm:text-lg md:text-xl text-gray-300 text-center leading-relaxed font-jeju">
         Ticz is a <strong>seamless, login-free event ticket booking UI</strong>{" "}
         designed for developers to explore, clone, and build upon. With a{" "}
         <strong>three-step booking flow</strong>, users can book event tickets{" "}

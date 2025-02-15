@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import html2canvas from "html2canvas";
+import { toast } from "react-hot-toast";
 import { useDropzone } from "react-dropzone";
 import { useState, useCallback, useEffect } from "react";
 
@@ -15,6 +16,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+
+const handleDesignClick = () => {
+  toast("Waiting on designs!", {
+    icon: "🎨",
+    style: {
+      background: "#24A0B5",
+      color: "#fff",
+      fontFamily: "Jeju",
+    },
+  });
+};
 
 const LOCAL_STORAGE_KEY = "ticket-form-data";
 
@@ -207,7 +220,7 @@ const TicketSelection = () => {
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row h-12 justify-end items-end gap-4 self-stretch mt-12 md:mt-0">
-            <Button className="w-full sm:w-auto flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-transparent text-[#24A0B5] font-jeju text-[16px] font-normal hover:bg-[#24A0B5] hover:text-white transition-all">
+            <Button className="w-full sm:w-auto flex-1 h-12 px-6 py-3 justify-center items-center gap-2 rounded-[8px] border border-[#24A0B5] bg-transparent text-[#24A0B5] font-jeju text-[16px] font-normal hover:bg-[#24A0B5] hover:text-white transition-all" onClick={handleDesignClick}>
               Cancel
             </Button>
             <Button

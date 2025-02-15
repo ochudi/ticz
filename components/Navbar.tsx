@@ -2,9 +2,22 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import {toast} from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
+
+const handleDesignClick = () => {
+  toast("Waiting on designs!", {
+    icon: "🎨",
+    style: {
+      background: "#24A0B5",
+      color: "#fff",
+      fontFamily: "Jeju",
+    },
+  });
+};
 
 const Navbar = () => {
   const router = useRouter();
@@ -51,7 +64,7 @@ const Navbar = () => {
       </div>
 
       <div className="flex items-center gap-4">
-        <Button className="bg-white text-black px-4 py-6 justify-center items-center gap-2 rounded-[12px] hover:bg-gray-200 border border-[rgba(213,234,0,0.10)]">
+        <Button className="bg-white text-black px-4 py-6 justify-center items-center gap-2 rounded-[12px] hover:bg-gray-200 border border-[rgba(213,234,0,0.10)]" onClick={handleDesignClick}>
           MY TICKETS →
         </Button>
       </div>
