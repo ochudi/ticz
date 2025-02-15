@@ -8,7 +8,7 @@ const ComingSoon = ({ page }: { page: string }) => {
       </h1>
       <p className="mt-4 text-3xl sm:text-xl text-gray-300 max-w-lg font-jeju">
         Our designer is taking their sweet time... probably debating between
-        'Helvetica or Inter' 😅. But don't worry, <strong>{page}</strong> is
+        &apos;Helvetica or Inter&apos; 😅. But don&apos;t worry, <strong>{page}</strong> is
         on the way!
       </p>
       <p className="mt-2 text-gray-400 font-jeju">
